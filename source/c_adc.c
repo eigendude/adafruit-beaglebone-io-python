@@ -55,8 +55,8 @@ BBIO_err initialize_adc(void)
 #ifdef BBBVERSION41
     err = load_device_tree("BB-ADC");
     if (err == BBIO_OK) {
-        strncat(adc_prefix_dir, "/sys/bus/iio/devices/iio:device0/in_voltage", sizeof(adc_prefix_dir));
-        snprintf(test_path, sizeof(test_path), "%s%d_raw", adc_prefix_dir, 1);
+        strncat(adc_prefix_dir, "/sys/bus/iio/devices/iio:device0/in_voltage", sizeof(adc_prefix_dir) - 1);
+        snprintf(test_path, sizeof(test_path) - 1, "%s%d_raw", adc_prefix_dir, 1);
         sleep(1);
         fh = fopen(test_path, "r");
 
@@ -73,8 +73,8 @@ BBIO_err initialize_adc(void)
     if (err == BBIO_OK) {
         build_path("/sys/devices", "ocp.", ocp_dir, sizeof(ocp_dir));
         build_path(ocp_dir, "helper.", adc_prefix_dir, sizeof(adc_prefix_dir));
-        strncat(adc_prefix_dir, "/AIN", sizeof(adc_prefix_dir));
-        snprintf(test_path, sizeof(test_path), "%s%d", adc_prefix_dir, 0);
+        strncat(adc_prefix_dir, "/AIN", sizeof(adc_prefix_dir) - 1);
+        snprintf(test_path, sizeof(test_path) - 1, "%s%d", adc_prefix_dir, 0);
         fh = fopen(test_path, "r");
 
         if (!fh) {
@@ -95,10 +95,10 @@ BBIO_err read_value(unsigned int ain, float *value)
     FILE * fh;
 #ifdef BBBVERSION41
     char ain_path[49];
-    snprintf(ain_path, sizeof(ain_path), "%s%d_raw", adc_prefix_dir, ain);
+    snprintf(ain_path, sizeof(ain_path) - 1, "%s%d_raw", adc_prefix_dir, ain);
 #else
     char ain_path[40];
-    snprintf(ain_path, sizeof(ain_path), "%s%d", adc_prefix_dir, ain);
+    snprintf(ain_path, sizeof(ain_path) - 1, "%s%d", adc_prefix_dir, ain);
 #endif
 
     int err, try_count=0;
