@@ -1,3 +1,5 @@
+from Adafruit_Config import Adafruit_Config
+
 try:
     from overlays import builder
     builder.compile()
@@ -7,16 +9,14 @@ except:
 
 import distribute_setup
 import io
-import sys
-import platform
 distribute_setup.use_setuptools()
 from setuptools import setup, Extension, find_packages
 
 open_as_utf8 = lambda x: io.open(x, encoding='utf-8')
 
-kernel = platform.release()
+config = Adafruit_Config()
 
-if kernel >= '4.1.0':
+if config.is_kernel41():
     kernel41 = [('BBBVERSION41', None)]
 else:
     kernel41 = None

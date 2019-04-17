@@ -45,13 +45,6 @@ SOFTWARE.
 
 #include "common.h"
 
-#include <linux/version.h>
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,1,0)
-#  ifndef BBBVERSION41
-#    define BBBVERSION41
-#  endif
-#endif
-
 int gpio_mode;
 int gpio_direction[120];
 
